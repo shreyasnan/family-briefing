@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Shreyas Briefing">
+  <meta name="theme-color" content="#1e3a5f">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Morning Briefing — Shreyas</title>
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f0eb;
+      --card: #ffffff;
+      --text: #1a1a2e;
+      --text-secondary: #374151;
+      --text-muted: #6b7280;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --flag-bg: #fef3c7;
+      --flag-border: #f59e0b;
+      --green-bg: #ecfdf5;
+      --green-border: #10b981;
+      --pink-bg: #fce7f3;
+      --pink-border: #ec4899;
+      --border: #e5e7eb;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; min-height: -webkit-fill-available;
+      padding: 0 0 3rem 0;
+      padding: 0 0 calc(3rem + env(safe-area-inset-bottom)) 0;
+      -webkit-font-smoothing: antialiased; line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+      color: white;
+      padding: 1.5rem 1.25rem 1.5rem;
+      padding-top: calc(1.5rem + env(safe-area-inset-top));
+      border-radius: 0 0 1.5rem 1.5rem;
+    }
+    .header .date { font-size: 0.72rem; font-weight: 500; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.2rem; }
+    .header .greeting { font-size: 1.45rem; font-weight: 700; line-height: 1.2; }
+    .header .subtitle { font-size: 0.85rem; opacity: 0.7; margin-top: 0.15rem; }
+
+    .container {
+      max-width: 520px; margin: 0 auto;
+      padding: 0 0.85rem;
+      padding-left: calc(0.85rem + env(safe-area-inset-left));
+      padding-right: calc(0.85rem + env(safe-area-inset-right));
+    }
+
+    .card {
+      background: var(--card); border-radius: 0.875rem;
+      padding: 1rem 1.1rem; margin-top: 0.75rem; box-shadow: var(--shadow);
+    }
+    .card-label {
+      font-size: 0.68rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 0.6rem;
+      display: flex; align-items: center; gap: 0.35rem;
+    }
+
+    /* Highlight */
+    .highlight {
+      background: var(--accent-light); border-left: 4px solid var(--accent);
+      border-radius: 0.75rem; padding: 0.9rem 1rem; margin-top: 0.75rem;
+      font-size: 0.9rem; line-height: 1.6;
+    }
+    .highlight strong { font-weight: 600; }
+
+    /* Weather — compact */
+    .weather-row-compact {
+      display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem;
+    }
+    .weather-row-compact .wicon { font-size: 1.3rem; }
+    .weather-row-compact .wtemp { font-weight: 700; font-size: 1rem; }
+    .weather-row-compact .wdesc { color: var(--text-secondary); }
+    .weather-forecast-compact { margin-top: 0.4rem; }
+    .weather-forecast-compact .frow {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.8rem; color: var(--text-muted); padding: 0.15rem 0;
+    }
+    .weather-forecast-compact .frow .fname { min-width: 50px; font-weight: 500; color: var(--text-secondary); }
+    .weather-forecast-compact .frow .ficon { font-size: 0.95rem; }
+    .weather-alert {
+      background: var(--flag-bg); border-radius: 0.5rem; padding: 0.45rem 0.65rem;
+      font-size: 0.78rem; margin-top: 0.4rem; line-height: 1.45;
+    }
+
+    /* Schedule timeline */
+    .timeline { list-style: none; }
+    .timeline li { position: relative; padding: 0.5rem 0 0.5rem 1.6rem; font-size: 0.86rem; border-bottom: 1px solid var(--border); }
+    .timeline li:last-child { border-bottom: none; }
+    .timeline li::before { content: ''; position: absolute; left: 0.15rem; top: 0.82rem; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    .timeline .time { font-weight: 600; color: var(--accent); font-size: 0.78rem; display: block; }
+    .timeline .event-title { font-weight: 500; word-break: break-word; }
+    .timeline .event-detail { color: var(--text-muted); font-size: 0.78rem; word-break: break-word; }
+
+    /* Commute */
+    .commute-box {
+      background: var(--green-bg); border-left: 3px solid var(--green-border);
+      border-radius: 0 0.5rem 0.5rem 0; padding: 0.75rem 1rem;
+      font-size: 0.88rem; line-height: 1.5; margin-bottom: 0.65rem;
+    }
+    .commute-box strong { font-weight: 600; }
+
+    /* Flags */
+    .flag {
+      background: var(--flag-bg); border-left: 3px solid var(--flag-border);
+      border-radius: 0 0.5rem 0.5rem 0; padding: 0.75rem 1rem;
+      margin-top: 0.5rem; font-size: 0.85rem; line-height: 1.5;
+    }
+    .flag:first-child { margin-top: 0; }
+    .flag strong { font-weight: 600; }
+
+    /* Workout */
+    .workout-box {
+      background: linear-gradient(135deg, #ede9fe, #dbeafe);
+      border-radius: 0.75rem; padding: 1rem 1.15rem;
+      font-size: 0.88rem; line-height: 1.6;
+    }
+    .workout-box .quote { font-style: italic; margin-bottom: 0.35rem; }
+    .workout-box .push { font-weight: 600; }
+
+    /* Callout cards (healthy, calls) */
+    .callout {
+      border-radius: 0.75rem; padding: 0.85rem 1rem;
+      font-size: 0.87rem; line-height: 1.55;
+    }
+    .callout-green { background: var(--green-bg); border-left: 3px solid var(--green-border); }
+    .callout-pink { background: var(--pink-bg); border-left: 3px solid var(--pink-border); }
+    .callout strong { font-weight: 600; }
+
+    /* Email */
+    .email-item {
+      padding: 0.55rem 0; border-bottom: 1px solid var(--border);
+      font-size: 0.86rem;
+    }
+    .email-item:last-child { border-bottom: none; }
+    .email-from { font-weight: 600; font-size: 0.82rem; }
+    .email-subject { color: var(--text-secondary); }
+    .email-note { color: var(--text-muted); font-size: 0.78rem; }
+    .email-badge {
+      display: inline-block; background: var(--flag-bg); color: #92400e;
+      font-size: 0.65rem; font-weight: 600; padding: 0.1rem 0.4rem;
+      border-radius: 0.25rem; text-transform: uppercase; letter-spacing: 0.03em;
+    }
+
+    /* Week ahead */
+    .week-day { padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.87rem; }
+    .week-day:last-child { border-bottom: none; }
+    .week-day .day-name { font-weight: 600; color: var(--accent); font-size: 0.8rem; }
+    .week-day .day-items { color: var(--text-secondary); }
+
+    .footer {
+      text-align: center; padding: 1.5rem 0 0.5rem;
+      padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+      font-size: 0.72rem; color: var(--text-muted);
+    }
+    .footer button {
+      background: none; border: 1px solid var(--border); border-radius: 0.5rem;
+      padding: 0.5rem 1.25rem; font-size: 0.78rem; color: var(--text-muted);
+      cursor: pointer; font-family: inherit; margin-bottom: 0.35rem;
+      min-height: 44px; /* iOS tap target */
+    }
+
+    .loading {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%; animation: shimmer 1.5s infinite;
+      border-radius: 0.5rem; height: 1rem; width: 60%;
+    }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+    /* Small phones (iPhone SE, etc.) */
+    @media (max-width: 374px) {
+      .header .greeting { font-size: 1.25rem; }
+      .weather-temp { font-size: 1.6rem; }
+      .weather-icon { font-size: 1.8rem; }
+      .card { padding: 0.85rem 0.9rem; }
+      .highlight { padding: 0.75rem 0.85rem; font-size: 0.85rem; }
+    }
+
+    /* Tablets and wider */
+    @media (min-width: 560px) {
+      body { padding-top: 1rem; }
+      .header { border-radius: 1.5rem; margin: 0 0.5rem; }
+      .card { padding: 1.25rem; }
+      .weather-stats { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="date" id="date-line"></div>
+    <div class="greeting" id="greeting"></div>
+    <div class="subtitle">Here's your day at a glance.</div>
+  </div>
+
+  <!-- 1. KEY HIGHLIGHT -->
+  <div class="highlight" id="highlight">
+    <!-- BRIEFING_HIGHLIGHT -->
+    <strong>Whole-family visit to Aditya Pratha's new home in Foster City tonight (6:00–7:00 PM).</strong> This is the main event to plan around. Timing is tight — Amaira's swimming ends at 5:00 PM, so everyone needs to move fast after that.
+    <!-- /BRIEFING_HIGHLIGHT -->
+  </div>
+
+  <!-- 2. WEATHER (2-3 day + actionable advice) — live client-side -->
+  <div class="card">
+    <div class="card-label">☀️ Weather — Redwood City</div>
+    <div id="weather-content">
+      <div class="loading" style="width:120px;height:2rem;margin-bottom:8px"></div>
+      <div class="loading" style="width:200px"></div>
+    </div>
+    <div id="weather-advice-slot">
+      <!-- BRIEFING_WEATHER_ADVICE -->
+      <!-- /BRIEFING_WEATHER_ADVICE -->
+    </div>
+  </div>
+
+  <!-- 3. YOUR DAY TODAY (commute + kids + evening + workout) -->
+  <div class="card">
+    <div class="card-label">📅 Your Day Today</div>
+    <div id="day-content">
+      <!-- BRIEFING_DAY -->
+      <div class="commute-box"><strong>🚗 Leave by 8:30 AM</strong> — 15 min drive to 2820 Delaware St. Meetings start at 9, gives you buffer.</div>
+      <ul class="timeline">
+        <li><span class="time">8:15 AM</span><span class="event-title">🎒 School Drop-off</span><span class="event-detail">Pragya handles — drops Amaira, back by 8:45</span></li>
+        <li><span class="time">9:00 AM</span><span class="event-title">Work day starts</span><span class="event-detail">Tuesday — office day</span></li>
+        <li><span class="time">11:00 AM</span><span class="event-title">🏊 Inaaya Swimming</span><span class="event-detail">Pragya takes her — 11:00–12:00</span></li>
+        <li><span class="time">3:30 PM</span><span class="event-title">🎒 School Pickup → Pool</span><span class="event-detail">Pragya picks up Amaira, drives straight to swimming</span></li>
+        <li><span class="time">4:00–5:00 PM</span><span class="event-title">🏊 Amaira Swimming</span><span class="event-detail">Ends at 5 PM — tight timing for the evening visit</span></li>
+        <li><span class="time">6:00–7:00 PM</span><span class="event-title">🏠 Visit Aditya Pratha's New Home</span><span class="event-detail">Foster City — whole family</span></li>
+      </ul>
+      <div class="commute-box" style="margin-top:0.6rem"><strong>🚗 Leave Work By: 5:00 PM</strong><br>Work → home (15 min) → get family ready (30 min) → drive to Foster City (15 min) → arrive ~6:00 PM.<br>Pragya + kids home from swimming ~5:15–5:25, so you have about 20 min to get everyone out the door.</div>
+      <!-- /BRIEFING_DAY -->
+    </div>
+  </div>
+
+  <!-- 4. HEADS UP / FLAGS -->
+  <div class="card" id="flags-card">
+    <div class="card-label">⚠️ Heads Up</div>
+    <div id="flags-content">
+      <!-- BRIEFING_FLAGS -->
+      <div class="flag"><strong>Pragya's Tuesday evening off is cancelled.</strong> She'd normally get the evening free, but the whole-family visit means all hands on deck. Give her a heads-up so she can plan accordingly.</div>
+      <div class="flag"><strong>Timing is tight after swimming.</strong> Amaira's swim ends at 5:00 PM → Pragya + both girls home ~5:15–5:25 → leaves about 20 min to get everyone changed and out the door. Packing a change of clothes for the girls to use at the pool would help.</div>
+      <div class="flag"><strong>📦 FedEx delivery today</strong> — Walgreens pharmacy shipment arriving. Keep an eye out.</div>
+      <!-- /BRIEFING_FLAGS -->
+    </div>
+  </div>
+
+  <!-- 5. WORKOUT (shown only on workout days) -->
+  <div class="card" id="workout-card" style="display:none">
+    <div class="card-label">💪 Workout Day</div>
+    <div id="workout-content">
+      <!-- BRIEFING_WORKOUT -->
+      <!-- /BRIEFING_WORKOUT -->
+    </div>
+  </div>
+
+  <!-- 6. EAT HEALTHY -->
+  <div class="card">
+    <div class="card-label">🥗 Eat Well</div>
+    <div id="healthy-content">
+      <!-- BRIEFING_HEALTHY -->
+      <div class="callout callout-green"><strong>Busy evening ahead.</strong> Eat a solid lunch — you'll go straight from office to the Foster City visit with no dinner break. Maybe grab a snack around 4:30 so you're not running on fumes by 6 PM.</div>
+      <!-- /BRIEFING_HEALTHY -->
+    </div>
+  </div>
+
+  <!-- 7. EMAIL SUMMARY -->
+  <div class="card">
+    <div class="card-label">📧 Email — Needs Attention</div>
+    <div id="email-content">
+      <!-- BRIEFING_EMAIL -->
+      <div class="email-item"><span class="email-badge">FOLLOW UP</span> <span class="email-from">DECA USA LLP (tax@decausallp.com)</span><br><span class="email-subject">Tax Information Request — TY 2025</span><br><span class="email-note">You sent tax docs on Sunday. No reply yet — may want to confirm they received everything.</span></div>
+      <div class="email-item"><span class="email-badge">NEW ACCESS</span> <span class="email-from">Apple</span><br><span class="email-subject">Welcome to App Store Connect</span><br><span class="email-note">You now have App Store Connect access. Worth a quick look when you have time.</span></div>
+      <div class="email-item"><span class="email-from">Google Cloud</span><br><span class="email-subject">Free Trial activated + paid account upgrade</span><br><span class="email-note">Two emails — account upgraded and trial started. No action needed unless unexpected.</span></div>
+      <div class="email-item"><span class="email-from">Project Solar</span><br><span class="email-subject">Your Solar Estimate</span><br><span class="email-note">Estimate came in overnight. Review when you have a free moment.</span></div>
+      <!-- /BRIEFING_EMAIL -->
+    </div>
+  </div>
+
+  <!-- 8. FAMILY CALLS -->
+  <div class="card" id="calls-card">
+    <div class="card-label">📞 Family Calls</div>
+    <div id="calls-content">
+      <!-- BRIEFING_CALLS -->
+      <div class="callout callout-pink"><strong>📞 Drive-time call:</strong> It's Tuesday — first office day this week. Call Mom &amp; Dad on your drive in. The ~15 min commute is perfect for a quick catch-up. (India family: 0 of 2 calls this week. In-laws: 0 of 1.)</div>
+      <!-- /BRIEFING_CALLS -->
+    </div>
+  </div>
+
+  <!-- 9. WEEK AHEAD -->
+  <div class="card">
+    <div class="card-label">📍 This Week Ahead</div>
+    <div id="week-content">
+      <!-- BRIEFING_WEEK -->
+      <div class="week-day"><span class="day-name">Wed</span> <span class="day-items">Amaira Tennis 4 PM · Yard Soccer + Workout 6:30 PM · Late Night Walk 9:30 PM</span></div>
+      <div class="week-day"><span class="day-name">Thu</span> <span class="day-items">School Pickup 3:15 PM · Yard Soccer + Workout 6:30 PM</span></div>
+      <div class="week-day"><span class="day-name">Fri</span> <span class="day-items">Amaira Soccer @ Red Morton 5 PM · Family Dinner 6:30 PM</span></div>
+      <div class="week-day"><span class="day-name">Sat</span> <span class="day-items">🧗 Bouldering @ Hyperion 10:30 AM · Visit Supriya Bahri 4:30 PM</span></div>
+      <div class="week-day"><span class="day-name">Sun</span> <span class="day-items">💪 Personal Trainer 8 AM · Amaira Soccer @ Red Morton 11 AM</span></div>
+      <!-- /BRIEFING_WEEK -->
+    </div>
+  </div>
+
+  <div class="footer">
+    <button onclick="location.reload()">Refresh</button>
+    <div id="gen-time">
+      <!-- BRIEFING_GENERATED -->
+      Generated Tuesday, March 31, 2026 at 7:42 AM
+      <!-- /BRIEFING_GENERATED -->
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── Greeting ──
+  (function() {
+    const now = new Date();
+    const h = now.getHours();
+    const greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+    const opts = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+    document.getElementById('date-line').textContent = now.toLocaleDateString('en-US', opts).toUpperCase();
+    document.getElementById('greeting').textContent = greet + ', Shreyas';
+  })();
+
+  // ── Weather (compact) ──
+  (async function() {
+    try {
+      const r = await fetch('https://wttr.in/Redwood+City,CA?format=j1');
+      const d = await r.json();
+      const c = d.current_condition[0], days = d.weather;
+      const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      const ic = s => {
+        s = s.toLowerCase();
+        if (s.includes('sun') || s.includes('clear')) return '☀️';
+        if (s.includes('partly') || s.includes('cloud')) return '⛅';
+        if (s.includes('overcast')) return '☁️';
+        if (s.includes('rain') || s.includes('drizzle')) return '🌧️';
+        if (s.includes('thunder')) return '⛈️';
+        if (s.includes('snow')) return '❄️';
+        if (s.includes('fog') || s.includes('mist')) return '🌫️';
+        return '🌤️';
+      };
+
+      // Today line
+      const desc = c.weatherDesc[0].value;
+      const hi = days[0].maxtempF;
+
+      // Forecast rows for next 2 days
+      let forecast = '';
+      for (let i = 1; i < Math.min(days.length, 3); i++) {
+        const fd = new Date(days[i].date + 'T12:00:00');
+        const fdesc = days[i].hourly[4].weatherDesc[0].value;
+        forecast += `<div class="frow"><span class="fname">${dayNames[fd.getDay()]}</span><span class="ficon">${ic(fdesc)}</span><span>${days[i].maxtempF}°</span><span>${fdesc}</span></div>`;
+      }
+
+      // Alert if anything unusual: rain, extreme heat/cold, high wind
+      let alert = '';
+      for (let i = 0; i < Math.min(days.length, 3); i++) {
+        const chance = Math.max(...days[i].hourly.map(h => parseInt(h.chanceofrain || 0)));
+        const maxWind = Math.max(...days[i].hourly.map(h => parseInt(h.windspeedMiles || 0)));
+        const high = parseInt(days[i].maxtempF);
+        const when = i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : dayNames[new Date(days[i].date + 'T12:00:00').getDay()];
+        if (chance > 40) {
+          alert += `<div class="weather-alert">🌧️ <strong>${when}:</strong> ${chance}% rain — cover yard furniture & kids' outdoor toys.</div>`;
+        }
+        if (high >= 95) {
+          alert += `<div class="weather-alert">🔥 <strong>${when}:</strong> ${high}°F — keep the girls hydrated, limit outdoor play midday.</div>`;
+        }
+        if (maxWind >= 25) {
+          alert += `<div class="weather-alert">💨 <strong>${when}:</strong> Gusts up to ${maxWind} mph — secure anything loose in the yard.</div>`;
+        }
+      }
+
+      document.getElementById('weather-content').innerHTML = `
+        <div class="weather-row-compact">
+          <span class="wicon">${ic(desc)}</span>
+          <span class="wtemp">${hi}°F</span>
+          <span class="wdesc">${desc}</span>
+        </div>
+        <div class="weather-forecast-compact">${forecast}</div>
+        ${alert}`;
+    } catch(e) {
+      document.getElementById('weather-content').innerHTML =
+        '<div style="color:var(--text-muted);font-size:0.85rem">Weather unavailable. <button onclick="location.reload()" style="color:var(--accent);background:none;border:none;cursor:pointer;font-family:inherit">Retry</button></div>';
+    }
+  })();
+</script>
+</body>
+</html>
