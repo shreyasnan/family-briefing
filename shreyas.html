@@ -25,8 +25,6 @@
       --flag-border: #f59e0b;
       --green-bg: #ecfdf5;
       --green-border: #10b981;
-      --pink-bg: #fce7f3;
-      --pink-border: #ec4899;
       --border: #e5e7eb;
       --shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
@@ -36,7 +34,6 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg); color: var(--text);
       min-height: 100vh; min-height: -webkit-fill-available;
-      padding: 0 0 3rem 0;
       padding: 0 0 calc(3rem + env(safe-area-inset-bottom)) 0;
       -webkit-font-smoothing: antialiased; line-height: 1.6;
       overflow-x: hidden;
@@ -70,148 +67,83 @@
       display: flex; align-items: center; gap: 0.35rem;
     }
 
-    /* Highlight */
+    /* Bottom line */
     .highlight {
       background: var(--accent-light); border-left: 4px solid var(--accent);
       border-radius: 0.75rem; padding: 0.9rem 1rem; margin-top: 0.75rem;
-      font-size: 0.9rem; line-height: 1.6;
+      font-size: 0.92rem; line-height: 1.6;
     }
     .highlight strong { font-weight: 600; }
 
-    /* Weather — compact */
-    .weather-row-compact {
-      display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem;
-    }
-    .weather-row-compact .wicon { font-size: 1.3rem; }
-    .weather-row-compact .wtemp { font-weight: 700; font-size: 1rem; }
-    .weather-row-compact .wdesc { color: var(--text-secondary); }
-    .weather-forecast-compact { margin-top: 0.4rem; }
-    .weather-forecast-compact .frow {
-      display: flex; align-items: center; gap: 0.5rem;
-      font-size: 0.8rem; color: var(--text-muted); padding: 0.15rem 0;
-    }
-    .weather-forecast-compact .frow .fname { min-width: 50px; font-weight: 500; color: var(--text-secondary); }
-    .weather-forecast-compact .frow .ficon { font-size: 0.95rem; }
-    .weather-alert {
-      background: var(--flag-bg); border-radius: 0.5rem; padding: 0.45rem 0.65rem;
-      font-size: 0.78rem; margin-top: 0.4rem; line-height: 1.45;
-    }
+    /* Weather line (compact, inline in Today) */
+    .wx-line { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+    .wx-line .wicon { font-size: 1.05rem; }
+    .wx-line .wtemp { font-weight: 700; }
+    .weather-alert { background: var(--flag-bg); border-radius: 0.5rem; padding: 0.4rem 0.6rem; font-size: 0.76rem; margin-top: 0.5rem; line-height: 1.45; }
 
-    /* Schedule timeline */
+    /* Timeline */
     .timeline { list-style: none; }
-    .timeline li { position: relative; padding: 0.5rem 0 0.5rem 1.6rem; font-size: 0.86rem; border-bottom: 1px solid var(--border); }
+    .timeline li { position: relative; padding: 0.45rem 0 0.45rem 1.6rem; font-size: 0.86rem; border-bottom: 1px solid var(--border); }
     .timeline li:last-child { border-bottom: none; }
-    .timeline li::before { content: ''; position: absolute; left: 0.15rem; top: 0.82rem; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    .timeline li::before { content: ''; position: absolute; left: 0.15rem; top: 0.78rem; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
     .timeline .time { font-weight: 600; color: var(--accent); font-size: 0.78rem; display: block; }
     .timeline .event-title { font-weight: 500; word-break: break-word; display: block; }
     .timeline .event-detail { color: var(--text-muted); font-size: 0.78rem; word-break: break-word; display: block; }
 
-    /* Commute */
-    .commute-box {
-      background: var(--green-bg); border-left: 3px solid var(--green-border);
-      border-radius: 0 0.5rem 0.5rem 0; padding: 0.75rem 1rem;
-      font-size: 0.88rem; line-height: 1.5; margin-bottom: 0.65rem;
+    /* Decision rows */
+    .decision {
+      border-left: 3px solid var(--flag-border); background: var(--flag-bg);
+      border-radius: 0 0.5rem 0.5rem 0; padding: 0.65rem 0.85rem;
+      margin-top: 0.5rem; font-size: 0.87rem; line-height: 1.5;
     }
-    .commute-box strong { font-weight: 600; }
+    .decision:first-child { margin-top: 0; }
+    .decision strong { font-weight: 600; }
+    .decision .ask { display: block; color: var(--text-muted); font-size: 0.78rem; margin-top: 0.15rem; }
+    .d-red { background: #fef2f2; border-left-color: #ef4444; }
+    .d-blue { background: #eff6ff; border-left-color: #2563eb; }
+    .d-green { background: var(--green-bg); border-left-color: var(--green-border); }
 
-    /* Flags */
-    .flag {
-      background: var(--flag-bg); border-left: 3px solid var(--flag-border);
-      border-radius: 0 0.5rem 0.5rem 0; padding: 0.75rem 1rem;
-      margin-top: 0.5rem; font-size: 0.85rem; line-height: 1.5;
-    }
-    .flag:first-child { margin-top: 0; }
-    .flag strong { font-weight: 600; }
+    /* Week + horizon rows */
+    .row { padding: 0.45rem 0; border-bottom: 1px solid var(--border); font-size: 0.86rem; line-height: 1.5; }
+    .row:last-child { border-bottom: none; }
+    .row .rlabel { font-weight: 600; color: var(--accent); font-size: 0.8rem; }
+    .row .ritems { color: var(--text-secondary); }
+    .row.muted .rlabel { color: var(--text-muted); }
+    .track { color: var(--text-muted); font-size: 0.8rem; padding-top: 0.55rem; line-height: 1.5; }
 
-    /* Workout */
-    .workout-box {
-      background: linear-gradient(135deg, #ede9fe, #dbeafe);
-      border-radius: 0.75rem; padding: 1rem 1.15rem;
-      font-size: 0.88rem; line-height: 1.6;
-    }
-    .workout-box .quote { font-style: italic; margin-bottom: 0.35rem; }
-    .workout-box .push { font-weight: 600; }
-
-    /* Callout cards (healthy, calls) */
-    .callout {
-      border-radius: 0.75rem; padding: 0.85rem 1rem;
-      font-size: 0.87rem; line-height: 1.55;
-    }
-    .callout-green { background: var(--green-bg); border-left: 3px solid var(--green-border); }
-    .callout-pink { background: var(--pink-bg); border-left: 3px solid var(--pink-border); }
-    .callout strong { font-weight: 600; }
-
-    /* Social proposals (pending review) */
-    .proposal {
-      background: #fff7ed; border-left: 3px solid #fb923c;
-      border-radius: 0 0.5rem 0.5rem 0; padding: 0.75rem 0.9rem;
-      margin-top: 0.5rem; font-size: 0.85rem; line-height: 1.5;
-    }
-    .proposal:first-child { margin-top: 0; }
-    .proposal strong { font-weight: 600; }
-    .proposal .prop-head { font-weight: 600; margin-bottom: 0.25rem; }
-    .proposal .prop-meta { color: var(--text-muted); font-size: 0.78rem; margin-top: 0.2rem; }
-    .proposal .prop-excerpt { font-style: italic; color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.25rem; }
-    .proposal .prop-actions { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.35rem; }
-    .prop-empty { color: var(--text-muted); font-size: 0.85rem; padding: 0.2rem 0; }
-    .prop-warning { background: #fee2e2; border-left: 3px solid #dc2626; border-radius: 0 0.5rem 0.5rem 0; padding: 0.6rem 0.85rem; font-size: 0.82rem; margin-bottom: 0.5rem; }
-
-    /* Email */
-    .email-item {
-      padding: 0.55rem 0; border-bottom: 1px solid var(--border);
-      font-size: 0.86rem;
-    }
+    /* Inbox */
+    .email-item { padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.86rem; }
     .email-item:last-child { border-bottom: none; }
     .email-from { font-weight: 600; font-size: 0.82rem; }
     .email-subject { color: var(--text-secondary); }
-    .email-note { color: var(--text-muted); font-size: 0.78rem; }
     .email-badge {
       display: inline-block; background: var(--flag-bg); color: #92400e;
-      font-size: 0.65rem; font-weight: 600; padding: 0.1rem 0.4rem;
+      font-size: 0.64rem; font-weight: 600; padding: 0.1rem 0.4rem;
       border-radius: 0.25rem; text-transform: uppercase; letter-spacing: 0.03em;
     }
 
-    /* Week ahead */
-    .week-day { padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.87rem; }
-    .week-day:last-child { border-bottom: none; }
-    .week-day .day-name { font-weight: 600; color: var(--accent); font-size: 0.8rem; }
-    .week-day .day-items { color: var(--text-secondary); }
-
     .footer {
-      text-align: center; padding: 1.5rem 0 0.5rem;
+      text-align: center; padding: 1.25rem 0 0.5rem;
       padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
       font-size: 0.72rem; color: var(--text-muted);
     }
     .footer button {
       background: none; border: 1px solid var(--border); border-radius: 0.5rem;
       padding: 0.5rem 1.25rem; font-size: 0.78rem; color: var(--text-muted);
-      cursor: pointer; font-family: inherit; margin-bottom: 0.35rem;
-      min-height: 44px; /* iOS tap target */
+      cursor: pointer; font-family: inherit; margin-bottom: 0.35rem; min-height: 44px;
     }
+    .footer .scan { display: block; margin-top: 0.4rem; }
 
     .loading {
+      display: inline-block;
       background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
       background-size: 200% 100%; animation: shimmer 1.5s infinite;
-      border-radius: 0.5rem; height: 1rem; width: 60%;
+      border-radius: 0.5rem; height: 0.9rem;
     }
     @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
-    /* Small phones (iPhone SE, etc.) */
-    @media (max-width: 374px) {
-      .header .greeting { font-size: 1.25rem; }
-      .weather-temp { font-size: 1.6rem; }
-      .weather-icon { font-size: 1.8rem; }
-      .card { padding: 0.85rem 0.9rem; }
-      .highlight { padding: 0.75rem 0.85rem; font-size: 0.85rem; }
-    }
-
-    /* Tablets and wider */
-    @media (min-width: 560px) {
-      body { padding-top: 1rem; }
-      .header { border-radius: 1.5rem; margin: 0 0.5rem; }
-      .card { padding: 1.25rem; }
-      .weather-stats { grid-template-columns: repeat(4, 1fr); }
-    }
+    @media (max-width: 374px) { .header .greeting { font-size: 1.25rem; } .card { padding: 0.85rem 0.9rem; } }
+    @media (min-width: 560px) { body { padding-top: 1rem; } .header { border-radius: 1.5rem; margin: 0 0.5rem; } .card { padding: 1.25rem; } }
   </style>
 </head>
 <body>
@@ -220,261 +152,84 @@
   <div class="header">
     <div class="date" id="date-line"></div>
     <div class="greeting" id="greeting"></div>
-    <div class="subtitle">Here's your day at a glance.</div>
+    <div class="subtitle">The 2-minute brief.</div>
   </div>
 
-  <!-- 0. PENDING SOCIAL PROPOSALS (from social-message-scan) -->
-  <div class="card" id="proposals-card">
-    <div class="card-label">💬 Pending Social Proposals</div>
-    <div id="proposals-content">
-      <!-- BRIEFING_PROPOSALS -->
-      <div class="prop-warning">🏠 <strong>The full house starts tonight.</strong> Three overlapping guest stretches: <strong>Nirav &amp; family move in TONIGHT</strong> (renovation stay — now locked), <strong>Deependra visiting Jul 20–27</strong>, and <strong>Alisha &amp; Vedant ~Jul 25 for a week</strong>. Map rooms/logistics — the first guests arrive in hours.</div>
-      <div class="proposal" style="background:#fef2f2;border-left-color:#ef4444;">
-        <div class="prop-head">✅ LOCKED — Nirav &amp; family move in TONIGHT (Thu Jul 2)</div>
-        The hosting invite is now a confirmed <strong>stay, not a get-together.</strong> Nirav (Jul 1, 9:40 PM): <em>"all details are sorted… sign the contract tomorrow morning… your house from tomorrow night"</em> → you: <em>"cool hai! look forward to it .. aa jao."</em> They move in <strong>tonight</strong> during their home renovation, staying until their place is ready. Evening's only other item is yard soccer 6:30–7:30.
-        <div class="prop-meta">Confidence: firm (confirmed both sides) · 1:1 WhatsApp (Nirav) · Thu Jul 2 clear; kicks off the late-July full house.</div>
-        <div class="prop-actions">⏰ Have a room ready for tonight; confirm arrival time. · <em>Commit | Dismiss | Defer</em></div>
-      </div>
-      <div class="proposal" style="background:#fff7ed;border-left-color:#fb923c;">
-        <div class="prop-head">🆕 Famous Six — World Cup watch, tonight (Thu) and/or Fri Argentina game</div>
-        New Jul 1 thread: <strong>Puneet's driving down from Portland</strong> (left 6 AM, in ~6–7 PM tonight). The crew's weighing a watch <strong>tonight (Thu Jul 2)</strong> and a <strong>Fri Jul 3 Argentina game</strong>, with Aditya floating <strong>Alpine Inn</strong> for Friday. You: <em>"could do both."</em> Aditya may skip tonight (Pratha's work). ⚠️ Tonight you've got yard soccer + Nirav moving in; a <strong>Fri Alpine watch would collide with Family Dinner (6:30–8:30)</strong>.
-        <div class="prop-meta">Confidence: soft plan (days named, venue/who fluid) · WhatsApp group (Famous Six) · Thu = busy eve; Fri clashes Family Dinner.</div>
-        <div class="prop-actions">⏰ Decide Thu vs Fri; if Fri, sort the Family Dinner clash. · <em>Commit | Dismiss | Defer</em></div>
-      </div>
-      <div class="proposal" style="background:#fef2f2;border-left-color:#ef4444;">
-        <div class="prop-head">⚠️ Your SF conference, Tue–Wed Jul 21–22 (not on the calendar)</div>
-        Surfaced while rescheduling Deependra: <em>"21st will be hard, I'll be at a conference 21st and 22nd in SF city."</em> Two full days in the city, <strong>not on your calendar yet.</strong> Likely <strong>TrustCon</strong> — a "Birds of a Feather" sign-up email landed Jul 1. ⚠️ It collides with the recurring <strong>Tue Jul 21 "You take over kids — Pragya's evening off" (6–8 PM)</strong> — Pragya's heaviest day needs a backup.
-        <div class="prop-meta">Confidence: firm (stated commitment) · 1:1 WhatsApp (Deependra) + TrustCon email · ⚠️ conflicts Tue Jul 21 6–8 PM kid coverage.</div>
-        <div class="prop-actions">⏰ Add Jul 21–22 to the calendar; sort Tue Jul 21 evening kid coverage with Pragya. · <em>Commit | Dismiss | Defer</em></div>
-      </div>
-      <div class="proposal" style="background:#ecfdf5;border-left-color:#10b981;">
-        <div class="prop-head">🆕 Alisha &amp; Vedant — hosting ~Jul 25 for a week (Pragya confirmed)</div>
-        Pragya forwarded her exchange with <strong>Alisha</strong>, who's <strong>flying to SF ~Fri Jul 25 for a week</strong> and asked to stay part of the trip — Pragya said yes (<em>"more than happy to have you'll over"</em>). Guests are Alisha &amp; Vedant (her parents also in town); some nights may be at Arjun's. Overlaps Deependra's week.
-        <div class="prop-meta">Confidence: firm (Pragya confirmed) · 1:1 WhatsApp (Pragya) / Famous Six · Jul 25–31 clear (only Sat bouldering).</div>
-        <div class="prop-actions">⏰ Confirm which nights they stay with you vs Arjun's; coordinate the overlap with Deependra. · <em>Commit | Dismiss | Defer</em></div>
-      </div>
-      <div class="proposal" style="background:#eff6ff;border-left-color:#2563eb;">
-        <div class="prop-head">🔄 Deependra visit Jul 20–27 — Google campus MOVED to Fri Jul 24 + intros</div>
-        His Bay Area visit (Jul 20–27) is firm and you're hosting/helping with the valley. The <strong>Google campus visit moved off Jul 21 AM → proposed Fri Jul 24</strong> (Deependra 👍) because of your SF conference. You're also lining up intros for him: <strong>Ajay Kela</strong> (Wadhwani), <strong>Protik Mukhopadhyay</strong> (DataColor AI), and <strong>Joel De La Garza</strong> (a16z). Jul 24 is stacking up — sequence the day.
-        <div class="prop-meta">Confidence: soft/firm (visit firm; Jul 24 items proposed) · 1:1 WhatsApp (Deependra) · Fri Jul 24 daytime clear (Family Dinner 6:30 PM).</div>
-        <div class="prop-actions">⏰ Lock times for the campus visit + Ajay Kela on Jul 24; send Protik/Joel intros. · <em>Commit | Dismiss | Defer</em></div>
-      </div>
-      <div class="proposal" style="background:#eff6ff;border-left-color:#2563eb;">
-        <div class="prop-head">🆕 Ajay Kela ↔ Deependra — meeting proposed Fri Jul 24 (👍)</div>
-        You asked Ajay Kela (CEO, Wadhwani Foundation) to meet your cousin Deependra (family office, Dubai). Ajay: <em>"Of course, look forward."</em> You proposed <strong>Jul 24</strong>; Ajay reacted 👍 — date agreed in principle, time TBD. Same day as Deependra's campus visit, so sequence them.
-        <div class="prop-meta">Confidence: soft plan (date + 👍, time not set) · 1:1 WhatsApp (Ajay Kela) · Jul 24 daytime clear.</div>
-        <div class="prop-actions">⏰ Lock a time on Jul 24; coordinate with the campus visit. · <em>Commit | Dismiss | Defer</em></div>
-      </div>
-      <div class="proposal" style="background:#fdf2f8;border-left-color:#ec4899;">
-        <div class="prop-head">🔄 Smita — brunch at your place, Sat Jul 11 ~noon (firmed)</div>
-        The "see Smita separately" plan is now concrete: the Hitesh-birthday catch-up firmed to a <strong>~noon brunch at your place on Sat Jul 11</strong>; Smita's checking if Mayank joins. This is your preferred alternative to Hitesh's party that evening.
-        <div class="prop-meta">Confidence: firm (brunch set) · 1:1 WhatsApp (Smita) · Jul 11 noon clear (bouldering ends 12 PM — tight, no overlap).</div>
-        <div class="prop-actions">⏰ Block Sat Jul 11 noon; confirm headcount (Mayank?). · <em>Commit | Dismiss | Defer</em></div>
-      </div>
-      <div class="proposal" style="background:#fef2f2;border-left-color:#ef4444;">
-        <div class="prop-head">⚠️ Jul 11 is filling up — Smita brunch (noon) · Hitesh's 40th (~6 PM) · possible WC QF in LA</div>
-        <div style="margin:4px 0 2px;"><strong>☕ Smita brunch at yours, ~noon</strong> — set (above).</div>
-        <div style="margin:2px 0;"><strong>🎂 Hitesh's 40th</strong> — ~6 PM, Foster City ("40-Love": food, drinks, dancing). You're <em>leaning decline</em> — seeing Smita separately is your play.</div>
-        <div style="margin:2px 0;"><strong>⚽ World Cup Quarter-Final in LA</strong> — your cousin has 4 tickets (vs ~$4k StubHub). A full-day/overnight commitment that would clash with hosting Smita at noon.</div>
-        <div class="prop-meta">Confidence: Smita = firm; Hitesh = firm invite (leaning decline); QF = soft/exploratory.</div>
-        <div class="prop-actions">⏰ If you want the QF in LA, it likely can't coexist with the noon Smita brunch — pick a lane. RSVP Hitesh either way. · <em>Commit | Dismiss | Defer</em></div>
-      </div>
-      <div class="proposal" style="background:#ecfdf5;border-left-color:#10b981;">
-        <div class="prop-head">🆕 Scott Williams (Discord) — call proposed Mon Jul 6, awaiting his reply</div>
-        The Carlos-Faham intro is now a direct thread. Scott: <em>"let's connect… some time Thursday, next week works too."</em> You proposed <strong>Mon Jul 6</strong> (Thursday's off for you) and asked his topic. <strong>Awaiting Scott's confirm.</strong>
-        <div class="prop-meta">Confidence: soft / RSVP-needed · LinkedIn (Scott Williams) · Mon Jul 6 daytime clear (bouldering 6:30 PM only).</div>
-        <div class="prop-actions">⏰ Once Scott confirms, put it on the work calendar. (Supersedes the older Carlos intro item.)</div>
-      </div>
-      <div class="proposal" style="background:#ecfdf5;border-left-color:#10b981;">
-        <div class="prop-head">🆕 Pragya — family lunch / day-out, TODAY (Thu Jul 2)</div>
-        Soft family outing today: <em>"we can go somewhere for lunch etc."</em> You're <strong>off work today + Fri</strong>, kids off school all week. ⚠️ You've got a <strong>10 AM Range demo</strong> (booked) this morning and <strong>Nirav moving in tonight</strong> — so an early-afternoon lunch is the clean window.
-        <div class="prop-meta">Confidence: fuzzy / soft idea · 1:1 WhatsApp (Pragya) · Today midday clear between the 10 AM demo and tonight's move-in.</div>
-        <div class="prop-actions">⏰ Pick a spot for an early lunch; work it around the 10 AM demo + tonight's move-in. · <em>Commit | Dismiss | Defer</em></div>
-      </div>
-      <div class="proposal" style="background:#ecfdf5;border-left-color:#10b981;">
-        <div class="prop-head">🆕 Protik — "Your Child Our Future" charity gala, Sat Aug 8 (RSVP)</div>
-        Protik forwarded an invite to the <strong>Mitchell Thorp Foundation gala on Aug 8</strong> — a non-profit supporting families with critically ill children. A soft/forwarded invite, but a dated event with an RSVP. Evening galas run formal.
-        <div class="prop-meta">Confidence: soft / RSVP-needed · 1:1 WhatsApp (Protik) · Aug 8 evening clear (only 10:30 AM bouldering).</div>
-        <div class="prop-actions">⏰ Decide with Pragya &amp; RSVP; note it's the same week as the Dino/Shibs SF visit. · <em>Commit | Dismiss | Defer</em></div>
-      </div>
-      <div class="proposal" style="background:#fff7ed;border-left-color:#fb923c;">
-        <div class="prop-head">🤝 Dino &amp; Shibs in SF — Aug 2nd week (plan a meetup)</div>
-        <strong>Dinesh ("Dino") &amp; Shibs will be in SF ~Aug 9–15.</strong> Firms up the loose "settle it when you come to SF" thread — worth a small get-together with Manan once they lock dates.
-        <div class="prop-meta">Confidence: soft plan · 1:1 WhatsApp (Manan) · No exact date yet.</div>
-        <div class="prop-actions">⏰ No action till their dates firm up — then plan a meetup and loop in Manan.</div>
-      </div>
-      <div class="proposal" style="background:#fdf2f8;border-left-color:#ec4899;">
-        <div class="prop-head">🎂 Manan's 40th — milestone, still no plan</div>
-        You asked <em>"tumhara 40th ka kya plan hai?"</em> — he floated <em>"maybe just chill in some park… get some 🍺,"</em> you pushed back <em>"we can do better."</em> Still no date or firm plan.
-        <div class="prop-meta">Confidence: notable / fuzzy · 1:1 WhatsApp · No date yet.</div>
-        <div class="prop-actions">⏰ See what Manan lands on; if there's a party/trip, decide whether to join.</div>
-      </div>
-      <div class="proposal" style="background:#fdf2f8;border-left-color:#ec4899;">
-        <div class="prop-head">🎂 Pragya's 40th — keep planning (quietly)</div>
-        Two to-dos: <strong>(1) confirm the exact date</strong> for runway, and <strong>(2) decide how to mark it.</strong> Your specific idea stays off this shared file so it stays a surprise. 🤫
-        <div class="prop-meta">Confidence: notable / fuzzy · 1:1 WhatsApp · Date unconfirmed.</div>
-        <div class="prop-actions">⏰ Confirm date + add to calendar; keep planning under wraps.</div>
-      </div>
-      <div class="proposal" style="background:#fff7ed;border-left-color:#fb923c;">
-        <div class="prop-head">🏠 Philip Varghese — open US visit + you offered to host</div>
-        Philip got his US visa and you invited him to stay: <em>"don't worry about stay… just book your flight tickets."</em> Anytime with 1–2 months' heads-up; he'll likely see his Virginia cousin first. A standing invite, nothing dated.
-        <div class="prop-meta">Confidence: fuzzy · 1:1 WhatsApp · Open invite, no dates.</div>
-        <div class="prop-actions">⏰ No action until Philip picks dates — then block time + loop in Manan.</div>
-      </div>
-      <div class="proposal" style="background:#fef2f2;border-left-color:#ef4444;">
-        <div class="prop-head">📨 LinkedIn — reply owed to Ram Swaminathan (Aegis / Roblox intro)</div>
-        Ram asked you to <strong>connect his startup "Aegis" with the right person at Roblox</strong> and followed up <em>"Please do."</em> No scheduling ask, but still <strong>awaiting your reply/intro.</strong>
-        <div class="prop-meta">Confidence: action item · LinkedIn · Non-scheduling, open.</div>
-        <div class="prop-actions">⏰ Send the intro (or a polite hold).</div>
-      </div>
-      <div class="proposal">
-        <div class="prop-head">☕ Manisha Sharma — "Let's chat" (still unanswered)</div>
-        She pinged "Let's chat" May 29 — no reply yet. You did a virtual coffee Apr 17; easy to repeat. Reply with a slot, or let it go.
-        <div class="prop-meta">Confidence: fuzzy · 1:1 WhatsApp · No firm slot.</div>
-        <div class="prop-actions">⏰ Reply this week, or dismiss. · <em>Commit | Dismiss | Defer</em></div>
-      </div>
-      <div class="proposal" style="background:#f9fafb;border-left-color:#9ca3af;">
-        <div class="prop-head" style="color:#6b7280;">✅ Closed out / quiet</div>
-        For the record: <strong>Zohreh Baharvand call done</strong> (Jun 29); <strong>Shreyansh</strong> casual meetup still open but no new movement; <strong>Sumedh's Chicago pins</strong> moot (trip over); <strong>Sachin Kakkar</strong> wrapped ("enjoyed our meeting", Jun 30); Dinesh's DC catch-up settled (SF is now the Aug item); GLG/Arbolus paid-survey nudges easy to defer; Pathik &amp; Atif wrapped.
-      </div>
-      <div class="prop-meta" style="margin-top:0.5rem;">Last scan: <strong>Thu Jul 2, 5:16 AM</strong> · WA: ok (9 active 1:1s checked — all domestic/business/casual; Nirav move-in locked) · LI: ok (top 10 threads, 0 new — all predate cutoff) · <strong>1 new (Famous Six WC watch) + 1 update (Nirav move-in LOCKED tonight); 0 dupes</strong>. ✅ WhatsApp phone-sync working — full history visible. ℹ️ Open items: prep a room for Nirav tonight; decide Famous Six WC watch (Thu vs Fri Alpine); add Jul 21–22 SF conference + Tue Jul 21 kid coverage; lock Deependra Jul 24 (campus + Ajay Kela); block Jul 11 noon for Smita; confirm Alisha/Vedant nights; await Scott's Jul 6 reply; reply to Ram Swaminathan (LinkedIn).</div>
-<!-- /BRIEFING_PROPOSALS -->
-    </div>
+  <!-- 1. BOTTOM LINE -->
+  <div class="highlight">
+    <!-- BRIEFING_BOTTOMLINE -->
+    <strong>Long-weekend Friday, houseguests tonight.</strong> Chalk festival at 11, Argentina game at 3, family dinner at 6:30 — and <strong>Nirav &amp; family move in tonight</strong> (slipped a day; staying through Fri Jul 10). One coordination point: you're all out at dinner 6:30–8:30, so <strong>confirm Nirav's arrival time / keys</strong>. Good news: the Jul 21–22 SF conference and Smita brunch are now on the calendar. ✅
+<!-- /BRIEFING_BOTTOMLINE -->
   </div>
 
-  <!-- 1. KEY HIGHLIGHT -->
-  <div class="highlight" id="highlight">
-    <!-- BRIEFING_HIGHLIGHT -->
-    🗓️ <strong>Day off, and a big one at home, Shreyas.</strong> You're off work today (and Fri), kids off school all week. Two anchors on the day: a <strong>10 AM Range demo</strong> (booked) this morning, and <strong>Nirav &amp; family moving in tonight</strong> — it's locked, so have a room ready. In between, Pragya floated a <strong>family lunch</strong> — an early afternoon out is the clean window. Evening is <strong>yard soccer + a workout at 6:30</strong> (get it in), and the crew's weighing a <strong>World Cup watch tonight</strong> (Puneet's driving in from Portland). Still on your plate: <strong>add the Jul 21–22 SF conference</strong> (likely TrustCon; clashes with Tue kid coverage), and quick wins — reply to <strong>Ram Swaminathan</strong> (LinkedIn) and RSVP <strong>Hitesh's 40th</strong>. 🏠
-<!-- /BRIEFING_HIGHLIGHT -->
-  </div>
-
-  <!-- 2. WEATHER (2-3 day + actionable advice) — live client-side -->
+  <!-- 2. TODAY -->
   <div class="card">
-    <div class="card-label">☀️ Weather — Redwood City</div>
-    <div id="weather-content">
-      <div class="loading" style="width:120px;height:2rem;margin-bottom:8px"></div>
-      <div class="loading" style="width:200px"></div>
-    </div>
-    <div id="weather-advice-slot">
-      <!-- BRIEFING_WEATHER_ADVICE -->
-<div class="weather-alert">📍 <strong>Classic early-July Bay Area pattern.</strong> Grey marine-layer morning burning off to a mild, breezy afternoon — no rain in the picture. Fine for a lunch outing and evening yard soccer; sunscreen + water for the kids. Nothing in the yard to cover at 83 Duane.</div>
-<!-- /BRIEFING_WEATHER_ADVICE -->
-    </div>
+    <div class="card-label">📅 Today</div>
+    <div class="wx-line" id="weather-line"><span class="loading" style="width:150px"></span></div>
+    <ul class="timeline">
+      <!-- BRIEFING_TODAY -->
+      <li><span class="time">11:00 AM</span><span class="event-title">🎨 Chalk festival</span><span class="event-detail">Kids still off school — easy family outing to start the long weekend.</span></li>
+      <li><span class="time">3:00 PM</span><span class="event-title">⚽ Argentina vs Cape Verde</span><span class="event-detail">On your calendar — looks like the Famous Six Friday watch landed on the daytime game. Confirm with the crew.</span></li>
+      <li><span class="time">6:30 PM</span><span class="event-title">🍽️ Family Dinner (out)</span><span class="event-detail">House empty 6:30–8:30 — sort Nirav's keys/arrival before you leave.</span></li>
+      <li><span class="time">Tonight</span><span class="event-title">🏠 Nirav &amp; family move in</span><span class="event-detail">Slipped a day (packing supervision). Staying through Fri Jul 10, then to Manan's. Room ready.</span></li>
+<!-- /BRIEFING_TODAY -->
+    </ul>
   </div>
 
-  <!-- 3. YOUR DAY TODAY (commute + kids + evening + workout) -->
+  <!-- 3. NEEDS A DECISION -->
   <div class="card">
-    <div class="card-label">📅 Your Day Today</div>
-    <div id="day-content">
-      <!-- BRIEFING_DAY -->
-      <div class="commute-box"><strong>🏖️ Day off — no office, no commute.</strong> Kids are off school all week (recurring school drop-off/pickup on the calendar today are stale — ignore them). The day has two fixed points: a <strong>10 AM Range demo</strong> and <strong>Nirav's family moving in tonight</strong>. Keep the midday free for a family lunch, and leave the evening loose for the move-in.</div>
-      <ul class="timeline">
-        <li><span class="time">10:00–10:30 AM</span><span class="event-title">💰 Range demo (booked via Calendly)</span><span class="event-detail">Financial-planning demo you set up. Have any numbers/questions handy.</span></li>
-        <li><span class="time">Midday</span><span class="event-title">🍽️ Possible family lunch/outing (Pragya's idea)</span><span class="event-detail">Kids off school — an early afternoon out is the clean window before tonight.</span></li>
-        <li><span class="time">6:30–7:30 PM</span><span class="event-title">⚽ Yard soccer + 💪 workout</span><span class="event-detail">Yard soccer with Amaira, then your 30-min workout. <strong>It's a workout day</strong> — get it in before the house fills up.</span></li>
-        <li><span class="time">Evening</span><span class="event-title">🏠 Nirav &amp; family move in</span><span class="event-detail">Locked for tonight. Room ready, arrival time confirmed. Puneet's also driving in from Portland (~6–7 PM) if the crew watches the game.</span></li>
-      </ul>
-<!-- /BRIEFING_DAY -->
+    <div class="card-label">✅ Needs You</div>
+    <div>
+      <!-- BRIEFING_DECISIONS -->
+      <div class="decision d-red"><strong>🏠 Nirav arrival logistics — tonight.</strong> You're at dinner 6:30–8:30; confirm his arrival time or leave keys out. Room ready before you go.<span class="ask">Today</span></div>
+      <div class="decision d-blue"><strong>📨 Reply to Deependra (2 things).</strong> He asked for your take on the Evion "AI Summit Stanford" event (unread, 2:42 AM), and the home dinner with Vasudha needs a date — <strong>Jul 21–25 window</strong> works best (she leaves the 25th).<span class="ask">Today · 5 min</span></div>
+      <div class="decision"><strong>📞 Scott Williams (Discord) — Mon Jul 6 still unconfirmed.</strong> 3 days out and he's been silent since Jun 30. Nudge him today or release the slot.<span class="ask">Today</span></div>
+      <div class="decision"><strong>⚽ Confirm the watch plan with Famous Six.</strong> The 3 PM Argentina game is on your calendar; an Alpine evening watch would clash with family dinner. Tell the group which it is.<span class="ask">Before 3 PM</span></div>
+      <div class="decision d-green"><strong>✅ Done since yesterday:</strong> SF conference (Jul 21–22) + Smita brunch (Sat Jul 11) are on the calendar. Still open: Tue Jul 21 kid-coverage backup · lock Ajay Kela's time on Jul 24 · confirm Alisha/Vedant's nights.<span class="ask">This week</span></div>
+<!-- /BRIEFING_DECISIONS -->
     </div>
   </div>
 
-  <!-- 4. HEADS UP / FLAGS -->
-  <div class="card" id="flags-card">
-    <div class="card-label">⚠️ Heads Up</div>
-    <div id="flags-content">
-      <!-- BRIEFING_FLAGS -->
-      <div class="flag" style="background:#fef2f2;border-left-color:#ef4444;"><strong>🏠 TONIGHT — Nirav &amp; family move in (locked).</strong> A renovation stay, not a visit. Have a room ready and confirm the arrival time. Kicks off the late-July full house.</div>
-      <div class="flag" style="background:#fef3c7;border-left-color:#f59e0b;"><strong>💰 10 AM — Range demo (you booked it).</strong> Calendly confirmed a financial-planning demo today 10–10:30 AM. First thing on the day; have your questions ready.</div>
-      <div class="flag" style="background:#fff7ed;border-left-color:#fb923c;"><strong>⚽ Tonight/Fri — Famous Six World Cup watch.</strong> Puneet's driving in from Portland (~6–7 PM). Decide tonight vs a Fri Argentina game at Alpine — but Fri clashes with Family Dinner, and tonight's already got yard soccer + the move-in.</div>
-      <div class="flag" style="background:#ecfdf5;border-left-color:#10b981;"><strong>🍽️ Today — possible family lunch/outing.</strong> Off work today + Fri, kids off school all week. Pragya floated a day-out — early afternoon, between the 10 AM demo and tonight's move-in.</div>
-      <div class="flag" style="background:#fef2f2;border-left-color:#ef4444;"><strong>⚠️ Add your Jul 21–22 SF conference to the calendar.</strong> Not on there yet (likely TrustCon — a Birds-of-a-Feather sign-up email landed Jul 1). It collides with the recurring Tue Jul 21 "you take over kids 6–8 PM" — line up a backup for Pragya's evening.</div>
-      <div class="flag" style="background:#eff6ff;border-left-color:#2563eb;"><strong>🆕 Deependra Jul 20–27 — Google campus + intros now Fri Jul 24.</strong> Campus visit moved off Jul 21 (your conference); lock Jul 24 times for the campus + Ajay Kela, and send the Protik/Joel intros.</div>
-      <div class="flag" style="background:#fdf2f8;border-left-color:#ec4899;"><strong>🆕 Alisha &amp; Vedant — hosting ~Jul 25 for a week.</strong> Pragya confirmed. Sort which nights they're with you vs Arjun's; overlaps Deependra's week.</div>
-      <div class="flag" style="background:#fef2f2;border-left-color:#ef4444;"><strong>⚠️ Sat Jul 11 is filling up.</strong> Smita brunch at yours ~noon (set), Hitesh's 40th ~6 PM (leaning decline), and a possible WC QF in LA (cousin's 4 tickets). The LA trip can't coexist with the noon brunch — pick a lane. RSVP Hitesh regardless.</div>
-      <div class="flag" style="background:#ecfdf5;border-left-color:#10b981;"><strong>🆕 Mon Jul 6 — Scott Williams (Discord) call, awaiting his confirm.</strong> You proposed Jul 6; once he confirms, put it on the work calendar.</div>
-      <div class="flag"><strong>🩺 One Medical — action item for Amaira.</strong> Care-plan to-do; quick to knock out in the app if still open.</div>
-      <div class="flag" style="background:#fef3c7;border-left-color:#f59e0b;"><strong>💳 Harper School invoice — $2,222 (Amaira).</strong> Posted Jun 28 via Brightwheel — pay it / check the due date if not done.</div>
-      <div class="flag" style="background:#ecfdf5;border-left-color:#10b981;"><strong>🆕 Sat Aug 8 — Protik's charity gala (RSVP).</strong> Mitchell Thorp Foundation "Your Child Our Future" gala. Evening's clear; decide with Pragya. Same week as the Dino/Shibs SF visit.</div>
-      <div class="flag" style="background:#fdf2f8;border-left-color:#ec4899;"><strong>🎂 Pragya's 40th — confirm the date, keep planning quiet.</strong> Not yet in the calendar. Lock the date for runway; surprise idea stays off the shared briefing.</div>
-      <div class="flag"><strong>📝 SNPM Capital LLC — Statement of Information due Jul 31.</strong> CA filing; $250 late fee if missed. On the list, not urgent.</div>
-      <div class="flag"><strong>⚽ Real Madrid — no club matches right now.</strong> Summer break; only the national-team World Cup is on. 2026–27 La Liga opens <strong>Aug 15–16 vs Real Sociedad</strong> — the fixture list is now confirmed. Nothing on the RM calendar to track yet.</div>
-<!-- /BRIEFING_FLAGS -->
-    </div>
-  </div>
-
-  <!-- 5. EAT HEALTHY -->
+  <!-- 4. THIS WEEK -->
   <div class="card">
-    <div class="card-label">🥗 Eat Well</div>
-    <div id="healthy-content">
-      <!-- BRIEFING_HEALTHY -->
-      <div class="callout callout-green"><strong>Bank the healthy days before the house fills up.</strong> Guest weeks mean more eating out and grazing — so lock in clean, home-cooked meals now. Protein + veggies, plenty of water, and you've got a workout tonight to build on. 🥗💪💧</div>
-<!-- /BRIEFING_HEALTHY -->
-    </div>
-  </div>
-
-  <!-- 6. EMAIL SUMMARY -->
-  <div class="card">
-    <div class="card-label">📧 Email — Needs Attention</div>
-    <div id="email-content">
-      <!-- BRIEFING_EMAIL -->
-      <div style="background:#fffbeb;border-left:4px solid #f59e0b;padding:12px;border-radius:8px;margin-bottom:10px;">
-        <strong>📬 Quiet inbox — one appointment, nothing needing a written reply.</strong> Confirmed for today: your <strong>10 AM Range demo</strong> (Calendly reminder — you booked it). Still open from before: <strong>Harper invoice ($2,222)</strong>, <strong>RSVP Hitesh's 40th</strong>, Amaira's <strong>One Medical action item</strong>. New but low-stakes: <strong>GLG</strong> is nudging twice about a paid "AI in product development" call (easy defer or ignore), and a <strong>TrustCon "Birds of a Feather"</strong> sign-up (ties to your Jul 21–22 SF conference). FYI: SNPM filing (Jul 31). Sent box is quiet; the rest is statements and promos.
-      </div>
-      <div class="email-item"><span class="email-from">Calendly / Range</span> <span class="email-subject">Range demo — confirmed today, 10:00–10:30 AM PT</span> <span class="email-badge">Appt</span><div class="email-note">You're booked. Have any financial questions/numbers ready — it's the first thing on your day.</div></div>
-      <div class="email-item"><span class="email-from">TrustCon (TSPA)</span> <span class="email-subject">Sign up for a TrustCon Birds of a Feather</span> <span class="email-badge">FYI</span><div class="email-note">Sign-up required for sessions. Almost certainly your Jul 21–22 SF conference — a reason to get it on the calendar.</div></div>
-      <div class="email-item"><span class="email-from">Brightwheel — Harper School</span> <span class="email-subject">Invoice — $2,222 (Amaira) + new billing statement</span> <span class="email-badge">Bill</span><div class="email-note">Invoice posted Jun 28; a fresh billing statement landed today. Pay / check the due date if not done.</div></div>
-      <div class="email-item"><span class="email-from">Paperless Post (Hitesh's 40th)</span> <span class="email-subject">RSVP — "40–Love", Sat Jul 11, 6 PM, Foster City</span> <span class="email-badge">RSVP</span><div class="email-note">RSVP for you + Pragya. You're leaning toward the noon Smita brunch instead of the party.</div></div>
-      <div class="email-item"><span class="email-from">One Medical (care team)</span> <span class="email-subject">Action Item from Medical Team — for Amaira</span> <span class="email-badge">To-do</span><div class="email-note">Care-plan action item for Amaira. Quick to complete in the app.</div></div>
-      <div class="email-item"><span class="email-from">GLG (Maria Torrado)</span> <span class="email-subject">Paid call — "Impact of AI on the Product Development Lifecycle"</span> <span class="email-badge">Defer</span><div class="email-note">Two nudges Jul 1–2 for a paid expert call. Reply only if you want the gig; otherwise ignore.</div></div>
-      <div class="email-item"><span class="email-from">myFilingServices (SNPM Capital LLC)</span> <span class="email-subject">Statement of Information due July 31</span> <span class="email-badge">FYI</span><div class="email-note">CA compliance filing, $250 late fee if missed. On the radar, not urgent.</div></div>
-      <div class="email-item" style="color:var(--text-muted);font-size:0.82rem;font-style:italic;border-bottom:none;">Skip/noise (last 48h): Wells Fargo / Marcus / Star One statements, Farmers paperless, One Medical &amp; Product School newsletters, F1/DAZN/Bezel/Ace/Kia/July 4th promos, Rennlist digest. Nothing needs a reply.</div>
-<!-- /BRIEFING_EMAIL -->
-    </div>
-  </div>
-
-  <!-- 7. FAMILY CALLS -->
-  <div class="card" id="calls-card">
-    <div class="card-label">📞 Family Calls</div>
-    <div id="calls-content">
-      <!-- BRIEFING_CALLS -->
-      <div class="callout callout-pink"><strong>📞 No commute today — you're off work.</strong> Calls usually ride on the office drive, and this week that was Wednesday (India family, done). With Thu + Fri off, the next natural call window is the <strong>weekend</strong> — a good chance for a relaxed catch-up with the India family or in-laws now that the trip's behind you.</div>
-<!-- /BRIEFING_CALLS -->
-    </div>
-  </div>
-
-  <!-- 8. WEEK AHEAD -->
-  <div class="card">
-    <div class="card-label">📍 This Week Ahead</div>
-    <div id="week-content">
+    <div class="card-label">📍 This Week</div>
+    <div>
       <!-- BRIEFING_WEEK -->
-      <div class="week-day" style="background:#f0f9ff;border-radius:6px;padding:8px;"><span class="day-name">Thu Jul 2 (TODAY)</span> <span class="day-items">🏖️ Off work · 💰 Range demo 10 AM · 🍽️ possible family lunch (kids off school) · ⚽ yard soccer + 💪 workout 6:30 · 🏠 Nirav &amp; family move in tonight · ⚽ possible WC watch</span></div>
-      <div class="week-day"><span class="day-name">Fri Jul 3</span> <span class="day-items">🏖️ Off work · ⚽ Amaira soccer · 🍽️ Family dinner · ⚽ possible Argentina game @ Alpine (clashes w/ dinner)</span></div>
-      <div class="week-day"><span class="day-name">Sat Jul 4–Sun Jul 5</span> <span class="day-items">🎆 July 4th weekend · 💪 trainer + ⚽ soccer + 🧗 bouldering as usual · good weekend call window</span></div>
-      <div class="week-day"><span class="day-name">Mon Jul 6</span> <span class="day-items">📞 Scott Williams (Discord) call — pending his confirm · 🧗 bouldering 6:30 PM</span></div>
-      <div class="week-day"><span class="day-name">Sat Jul 11</span> <span class="day-items">☕ Smita brunch at yours ~noon · 🎂 Hitesh's 40th ~6 PM (leaning decline) · possible WC QF in LA</span></div>
+      <div class="row"><span class="rlabel">Fri Jul 3 (today)</span> <span class="ritems">Off · 🎨 chalk festival 11 · ⚽ Argentina game 3 · 🍽️ family dinner 6:30 · 🏠 Nirav move-in tonight</span></div>
+      <div class="row"><span class="rlabel">Sat Jul 4</span> <span class="ritems">🎆 July 4th · 🧗 bouldering 10:30–12 — long weekend, good window to call family in India</span></div>
+      <div class="row"><span class="rlabel">Sun Jul 5</span> <span class="ritems">💪 Trainer 8–9 AM · slow day with the full house</span></div>
+      <div class="row"><span class="rlabel">Mon Jul 6</span> <span class="ritems">📞 Scott Williams (Discord) call — still pending his confirm</span></div>
 <!-- /BRIEFING_WEEK -->
     </div>
   </div>
 
-  <!-- 9. LOOKAHEAD -->
+  <!-- 5. ON THE HORIZON -->
   <div class="card">
-    <div class="card-label">🔭 Coming Up (2–3 Weeks)</div>
-    <div id="lookahead-content">
-      <!-- BRIEFING_LOOKAHEAD -->
-      <div style="padding:0.3rem 0;font-size:0.88rem;line-height:1.55;">
-        <div style="padding:0.35rem 0;">🏠 <strong>Tonight — Nirav &amp; family move in (locked).</strong> Renovation stay; have a room ready. You're off Thu + Fri (kids off school).</div>
-        <div style="padding:0.35rem 0;">📞 <strong>Mon Jul 6 — Scott Williams (Discord) call</strong> (pending his confirm of your proposed slot).</div>
-        <div style="padding:0.35rem 0;">🗓️ <strong>Sat Jul 11 — busy day.</strong> Smita brunch at yours ~noon (set) · Hitesh's 40th ~6 PM (leaning decline) · possible WC QF in LA (cousin's 4 tickets). LA trip can't coexist with the noon brunch — pick a lane; RSVP Hitesh regardless.</div>
-        <div style="padding:0.35rem 0;">⚠️ <strong>Tue–Wed Jul 21–22 — your SF conference.</strong> Add to the calendar; sort backup for Tue Jul 21 evening kid coverage.</div>
-        <div style="padding:0.35rem 0;">🏠 <strong>Jul 20–27 — Deependra visiting SF.</strong> Google campus + Ajay Kela intro now <strong>Fri Jul 24</strong>; send Protik/Joel (a16z) intros. Pick hosting time.</div>
-        <div style="padding:0.35rem 0;">🏡 <strong>~Jul 25 (for a week) — Alisha &amp; Vedant staying.</strong> Pragya confirmed; overlaps Deependra's week — house is full late July.</div>
-        <div style="padding:0.35rem 0;">🎗️ <strong>Sat Aug 8 — Protik's charity gala</strong> (Mitchell Thorp Foundation). Decide with Pragya &amp; RSVP.</div>
-        <div style="padding:0.35rem 0;">🤝 <strong>~Aug 9–15 — Dino &amp; Shibs in SF.</strong> Plan a get-together with Manan once dates lock (same week as the gala).</div>
-        <div style="padding:0.35rem 0;">🎂 <strong>Pragya's 40th — date TBC.</strong> Confirm + add to calendar for runway (planning stays quiet). Manan's 40th is around the corner too.</div>
-        <div style="padding:0.35rem 0;">⚽ <strong>Real Madrid — no matches yet.</strong> Summer break; only the national-team World Cup is on. 2026–27 La Liga opens <strong>Aug 15–16 vs Real Sociedad</strong> (fixtures now confirmed).</div>
-      </div>
-<!-- /BRIEFING_LOOKAHEAD -->
+    <div class="card-label">🔭 On the Horizon (2–3 Weeks)</div>
+    <div>
+      <!-- BRIEFING_HORIZON -->
+      <div class="row"><span class="rlabel">Fri Jul 10</span> <span class="ritems">Nirav &amp; family move out → Manan's (clears the house for the 11th)</span></div>
+      <div class="row"><span class="rlabel">Sat Jul 11</span> <span class="ritems">☕ Smita brunch noon (on cal; Mayank maybe) · Hitesh's 40th ~6 PM (leaning decline) · WC quarter-final in LA — decide on cousin's 4 tickets</span></div>
+      <div class="row"><span class="rlabel">Tue Jul 21</span> <span class="ritems">Deependra + Vasudha land (trip extended to Aug 7; Vasudha leaves the 25th) · your SF conference Jul 21–22 (on cal) — sort Tue kid-coverage backup</span></div>
+      <div class="row"><span class="rlabel">Fri Jul 24</span> <span class="ritems">Deependra day — Google campus visit + Ajay Kela intro; lock times, he wants you there ("pls come")</span></div>
+      <div class="row"><span class="rlabel">~Jul 25 (1 wk)</span> <span class="ritems">Alisha &amp; Vedant staying — full house; Deependra+Vasudha home dinner best before the 25th</span></div>
+      <div class="row"><span class="rlabel">Sat Aug 8</span> <span class="ritems">Protik's charity gala (Mitchell Thorp Foundation) — RSVP with Pragya</span></div>
+      <div class="row muted"><span class="rlabel">⚽ Real Madrid</span> <span class="ritems">Off-season (verified) — La Liga 2026–27 kicks off ~Aug 16; preseason not announced. Calendar clean.</span></div>
+      <div class="track">🔕 <strong>Tracking, no action:</strong> Pragya's 40th (confirm date) · Manan's 40th · Dino &amp; Shibs in SF (Aug 2nd wk) · Philip's open US visit · Manisha coffee reply · Ram's Roblox intro ask.</div>
+<!-- /BRIEFING_HORIZON -->
+    </div>
+  </div>
+
+  <!-- 6. INBOX -->
+  <div class="card">
+    <div class="card-label">📧 Inbox — Action Items</div>
+    <div>
+      <!-- BRIEFING_INBOX -->
+      <div class="email-item"><span class="email-from">Prince Kumar (Arbolus)</span> <span class="email-subject">New paid consult — Trust &amp; Safety space</span> <span class="email-badge">Reply if interested</span></div>
+      <div class="email-item"><span class="email-from">Ahmed Haji (proSapient)</span> <span class="email-subject">Paid consult — managed privacy / DPO services (nudged twice)</span> <span class="email-badge">Reply if interested</span></div>
+      <div class="email-item"><span class="email-from">SNPM Capital LLC</span> <span class="email-subject">CA Statement of Information — due Jul 31</span> <span class="email-badge">Deadline</span></div>
+      <div class="email-item" style="color:var(--text-muted);font-size:0.8rem;font-style:italic;border-bottom:none;">Nothing you sent is awaiting a reply. Rest is month-end statements (Wells Fargo, IDFC, Bluevine) and promos.</div>
+<!-- /BRIEFING_INBOX -->
     </div>
   </div>
 
@@ -482,9 +237,14 @@
     <button onclick="location.reload()">Refresh</button>
     <div id="gen-time">
       <!-- BRIEFING_GENERATED -->
-      Generated Thursday, July 2, 2026 at 7:00 AM
+      Generated Friday, July 3, 2026 at 7:00 AM
 <!-- /BRIEFING_GENERATED -->
     </div>
+    <span class="scan">
+      <!-- BRIEFING_SCAN -->
+      Last social scan: Fri Jul 3, 5:12 AM · 9 WhatsApp chats + Famous Six, 10 LinkedIn threads · 1 new + 3 updates
+<!-- /BRIEFING_SCAN -->
+    </span>
   </div>
 
 </div>
@@ -500,8 +260,9 @@
     document.getElementById('greeting').textContent = greet + ', Shreyas';
   })();
 
-  // ── Weather (compact) ──
+  // ── Weather (single compact line + alert only if notable) ──
   (async function() {
+    const slot = document.getElementById('weather-line');
     try {
       const r = await fetch('https://wttr.in/Redwood+City,CA?format=j1');
       const d = await r.json();
@@ -518,48 +279,26 @@
         if (s.includes('fog') || s.includes('mist')) return '🌫️';
         return '🌤️';
       };
-
-      // Today line
       const desc = c.weatherDesc[0].value;
-      const hi = days[0].maxtempF;
+      const hi = days[0].maxtempF, lo = days[0].mintempF;
+      slot.innerHTML = `<span class="wicon">${ic(desc)}</span><span class="wtemp">${hi}°</span><span>/ ${lo}° · ${desc}, Redwood City</span>`;
 
-      // Forecast rows for next 2 days
-      let forecast = '';
-      for (let i = 1; i < Math.min(days.length, 3); i++) {
-        const fd = new Date(days[i].date + 'T12:00:00');
-        const fdesc = days[i].hourly[4].weatherDesc[0].value;
-        forecast += `<div class="frow"><span class="fname">${dayNames[fd.getDay()]}</span><span class="ficon">${ic(fdesc)}</span><span>${days[i].maxtempF}°</span><span>${fdesc}</span></div>`;
-      }
-
-      // Alert if anything unusual: rain, extreme heat/cold, high wind
+      // Alert only for rain / heat / wind today
+      const chance = Math.max(...days[0].hourly.map(h => parseInt(h.chanceofrain || 0)));
+      const maxWind = Math.max(...days[0].hourly.map(h => parseInt(h.windspeedMiles || 0)));
+      const high = parseInt(hi);
       let alert = '';
-      for (let i = 0; i < Math.min(days.length, 3); i++) {
-        const chance = Math.max(...days[i].hourly.map(h => parseInt(h.chanceofrain || 0)));
-        const maxWind = Math.max(...days[i].hourly.map(h => parseInt(h.windspeedMiles || 0)));
-        const high = parseInt(days[i].maxtempF);
-        const when = i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : dayNames[new Date(days[i].date + 'T12:00:00').getDay()];
-        if (chance > 40) {
-          alert += `<div class="weather-alert">🌧️ <strong>${when}:</strong> ${chance}% rain — cover yard furniture &amp; kids' outdoor toys.</div>`;
-        }
-        if (high >= 95) {
-          alert += `<div class="weather-alert">🔥 <strong>${when}:</strong> ${high}°F — keep the girls hydrated, limit outdoor play midday.</div>`;
-        }
-        if (maxWind >= 25) {
-          alert += `<div class="weather-alert">💨 <strong>${when}:</strong> Gusts up to ${maxWind} mph — secure anything loose in the yard.</div>`;
-        }
+      if (chance > 40) alert = `🌧️ ${chance}% rain today — cover yard furniture &amp; kids' toys.`;
+      else if (high >= 95) alert = `🔥 ${high}°F today — keep the girls hydrated, limit midday sun.`;
+      else if (maxWind >= 25) alert = `💨 Gusts to ${maxWind} mph — secure loose items in the yard.`;
+      if (alert) {
+        const a = document.createElement('div');
+        a.className = 'weather-alert';
+        a.innerHTML = alert;
+        slot.after(a);
       }
-
-      document.getElementById('weather-content').innerHTML = `
-        <div class="weather-row-compact">
-          <span class="wicon">${ic(desc)}</span>
-          <span class="wtemp">${hi}°F</span>
-          <span class="wdesc">${desc}</span>
-        </div>
-        <div class="weather-forecast-compact">${forecast}</div>
-        ${alert}`;
     } catch(e) {
-      document.getElementById('weather-content').innerHTML =
-        '<div style="color:var(--text-muted);font-size:0.85rem">Weather unavailable. <button onclick="location.reload()" style="color:var(--accent);background:none;border:none;cursor:pointer;font-family:inherit">Retry</button></div>';
+      slot.innerHTML = '<span style="color:var(--text-muted)">Weather unavailable.</span>';
     }
   })();
 </script>
