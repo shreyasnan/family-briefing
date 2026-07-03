@@ -114,6 +114,23 @@
     .cta.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
     .cta:active { opacity: 0.7; }
 
+    /* Quick capture */
+    .qc-box {
+      width: 100%; border: 1px solid var(--border); border-radius: 0.6rem;
+      padding: 0.6rem 0.7rem; font-family: inherit; font-size: 0.86rem;
+      color: var(--text); background: #fff; resize: vertical; min-height: 3.4rem;
+      line-height: 1.5;
+    }
+    .qc-box:focus { outline: 2px solid var(--accent-light); border-color: var(--accent); }
+    .qc-btn {
+      margin-top: 0.5rem; width: 100%; border: none; border-radius: 0.6rem;
+      background: var(--accent); color: #fff; font-family: inherit;
+      font-size: 0.85rem; font-weight: 600; padding: 0.65rem; cursor: pointer;
+      min-height: 44px;
+    }
+    .qc-btn:disabled { opacity: 0.45; }
+    .qc-hint { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.4rem; line-height: 1.45; }
+
     /* Week + horizon rows */
     .row { padding: 0.45rem 0; border-bottom: 1px solid var(--border); font-size: 0.86rem; line-height: 1.5; }
     .row:last-child { border-bottom: none; }
@@ -171,6 +188,14 @@
     <!-- BRIEFING_BOTTOMLINE -->
     <strong>Long-weekend Friday, houseguests tonight.</strong> Chalk festival at 11, Argentina game at 3, family dinner at 6:30 — and <strong>Nirav &amp; family move in tonight</strong> (slipped a day; staying through Fri Jul 10). One coordination point: you're all out at dinner 6:30–8:30, so <strong>confirm Nirav's arrival time / keys</strong>. Good news: the Jul 21–22 SF conference and Smita brunch are now on the calendar. ✅
 <!-- /BRIEFING_BOTTOMLINE -->
+  </div>
+
+  <!-- 1b. QUICK CAPTURE -->
+  <div class="card">
+    <div class="card-label">⚡ Quick Capture</div>
+    <textarea id="qc-text" class="qc-box" placeholder="Type anything — events, notes, instructions… e.g. &quot;dentist Tue 9am; dinner with Raj Fri 7pm; decline Hitesh RSVP&quot;" rows="2"></textarea>
+    <button id="qc-btn" class="qc-btn" onclick="fsbCapture()">Send to assistant → (opens Calendar, tap Save)</button>
+    <div class="qc-hint">Saves as a relay event on your Google Calendar (make sure it's your <strong>gmail</strong> account). The assistant processes it on the next morning run — events get created, notes get applied.</div>
   </div>
 
   <!-- 2. TODAY -->
@@ -274,6 +299,21 @@
 </div>
 
 <script>
+  // ── Quick capture → FSB-SYNC relay event via GCal template link ──
+  function fsbCapture() {
+    const box = document.getElementById('qc-text');
+    const t = box.value.trim();
+    if (!t) { box.focus(); return; }
+    const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+      + '&text=' + encodeURIComponent('FSB-SYNC: note — quick capture')
+      + '&dates=20991231/21000101'
+      + '&details=' + encodeURIComponent(t + '\n\n(src: pages quick-capture · processed on the next morning run)');
+    window.open(url, '_blank', 'noopener');
+    const btn = document.getElementById('qc-btn');
+    btn.textContent = 'Opened Calendar — tap Save there ✓';
+    setTimeout(() => { btn.textContent = 'Send to assistant → (opens Calendar, tap Save)'; box.value = ''; }, 4000);
+  }
+
   // ── Greeting ──
   (function() {
     const now = new Date();
