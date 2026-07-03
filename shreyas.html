@@ -103,6 +103,17 @@
     .d-blue { background: #eff6ff; border-left-color: #2563eb; }
     .d-green { background: var(--green-bg); border-left-color: var(--green-border); }
 
+    /* CTA pills (phone-workable: open prefilled Google Calendar events) */
+    .cta-row { margin-top: 0.45rem; display: flex; gap: 0.45rem; flex-wrap: wrap; }
+    .cta {
+      display: inline-block; font-size: 0.72rem; font-weight: 600;
+      text-decoration: none; padding: 0.28rem 0.7rem; border-radius: 999px;
+      border: 1px solid var(--border); color: var(--accent); background: #fff;
+      line-height: 1.4;
+    }
+    .cta.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .cta:active { opacity: 0.7; }
+
     /* Week + horizon rows */
     .row { padding: 0.45rem 0; border-bottom: 1px solid var(--border); font-size: 0.86rem; line-height: 1.5; }
     .row:last-child { border-bottom: none; }
@@ -181,11 +192,21 @@
     <div class="card-label">✅ Needs You</div>
     <div>
       <!-- BRIEFING_DECISIONS -->
-      <div class="decision d-red"><strong>🏠 Nirav arrival logistics — tonight.</strong> You're at dinner 6:30–8:30; confirm his arrival time or leave keys out. Room ready before you go.<span class="ask">Today</span></div>
-      <div class="decision d-blue"><strong>📨 Reply to Deependra (2 things).</strong> He asked for your take on the Evion "AI Summit Stanford" event (unread, 2:42 AM), and the home dinner with Vasudha needs a date — <strong>Jul 21–25 window</strong> works best (she leaves the 25th).<span class="ask">Today · 5 min</span></div>
-      <div class="decision"><strong>📞 Scott Williams (Discord) — Mon Jul 6 still unconfirmed.</strong> 3 days out and he's been silent since Jun 30. Nudge him today or release the slot.<span class="ask">Today</span></div>
-      <div class="decision"><strong>⚽ Confirm the watch plan with Famous Six.</strong> The 3 PM Argentina game is on your calendar; an Alpine evening watch would clash with family dinner. Tell the group which it is.<span class="ask">Before 3 PM</span></div>
-      <div class="decision d-green"><strong>✅ Done since yesterday:</strong> SF conference (Jul 21–22) + Smita brunch (Sat Jul 11) are on the calendar. Still open: Tue Jul 21 kid-coverage backup · lock Ajay Kela's time on Jul 24 · confirm Alisha/Vedant's nights.<span class="ask">This week</span></div>
+      <div class="decision d-red"><strong>🏠 Nirav arrival logistics — tonight.</strong> You're at dinner 6:30–8:30; confirm his arrival time or leave keys out. Room ready before you go.<span class="ask">Today</span>
+        <div class="cta-row"><a class="cta" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=FSB-SYNC%3A%20done%20%E2%80%94%20Nirav%20arrival%20sorted&amp;dates=20991231/21000101&amp;details=%7B%22v%22%3A1%2C%22id%22%3A%22nirav-arrival-jul3%22%2C%22done%22%3Atrue%2C%22src%22%3A%22pages%22%7D%0A%0AOptional%3A%20type%20a%20note%20for%20the%20assistant%20here%2C%20then%20Save." target="_blank" rel="noopener">✓ Mark done</a></div>
+      </div>
+      <div class="decision d-blue"><strong>📨 Reply to Deependra (2 things).</strong> He asked for your take on the Evion "AI Summit Stanford" event (unread, 2:42 AM), and the home dinner with Vasudha needs a date — <strong>Jul 21–25 window</strong> works best (she leaves the 25th).<span class="ask">Today · 5 min</span>
+        <div class="cta-row"><a class="cta" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=FSB-SYNC%3A%20done%20%E2%80%94%20Replied%20to%20Deependra&amp;dates=20991231/21000101&amp;details=%7B%22v%22%3A1%2C%22id%22%3A%22deependra-replies-jul3%22%2C%22done%22%3Atrue%2C%22src%22%3A%22pages%22%7D%0A%0AOptional%3A%20add%20the%20dinner%20date%20you%20proposed%20here%2C%20then%20Save." target="_blank" rel="noopener">✓ Mark done</a></div>
+      </div>
+      <div class="decision"><strong>📞 Scott Williams (Discord) — Mon Jul 6 still unconfirmed.</strong> 3 days out and he's been silent since Jun 30. Nudge him today or release the slot.<span class="ask">Today</span>
+        <div class="cta-row"><a class="cta primary" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=%F0%9F%93%9E%20Scott%20Williams%20(Discord)%20%E2%80%94%20intro%20call%20(hold)&amp;dates=20260706T130000/20260706T133000&amp;ctz=America%2FLos_Angeles&amp;details=Proposed%20Mon%20Jul%206%20by%20Shreyas%20(Jun%2030).%20Adjust%20the%20time%20before%20saving%20if%20Scott%20confirms%20a%20different%20slot." target="_blank" rel="noopener">📅 Hold Mon 1 PM</a><a class="cta" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=FSB-SYNC%3A%20done%20%E2%80%94%20Scott%20call%20handled&amp;dates=20991231/21000101&amp;details=%7B%22v%22%3A1%2C%22id%22%3A%22scott-jul6%22%2C%22done%22%3Atrue%2C%22src%22%3A%22pages%22%7D%0A%0AOptional%3A%20note%20the%20outcome%20(confirmed%20%2F%20released)%2C%20then%20Save." target="_blank" rel="noopener">✓ Mark done</a></div>
+      </div>
+      <div class="decision"><strong>⚽ Confirm the watch plan with Famous Six.</strong> The 3 PM Argentina game is on your calendar; an Alpine evening watch would clash with family dinner. Tell the group which it is.<span class="ask">Before 3 PM</span>
+        <div class="cta-row"><a class="cta" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=FSB-SYNC%3A%20done%20%E2%80%94%20Watch%20plan%20decided&amp;dates=20991231/21000101&amp;details=%7B%22v%22%3A1%2C%22id%22%3A%22famous-six-watch-jul3%22%2C%22done%22%3Atrue%2C%22src%22%3A%22pages%22%7D%0A%0AOptional%3A%20note%20what%20was%20decided%2C%20then%20Save." target="_blank" rel="noopener">✓ Mark done</a></div>
+      </div>
+      <div class="decision d-green"><strong>✅ Done since yesterday:</strong> SF conference (Jul 21–22) + Smita brunch (Sat Jul 11) are on the calendar. Still open: Tue Jul 21 kid-coverage backup · lock Ajay Kela's time on Jul 24 · confirm Alisha/Vedant's nights.<span class="ask">This week</span>
+        <div class="cta-row"><a class="cta" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=FSB-SYNC%3A%20note%20%E2%80%94%20open%20items&amp;dates=20991231/21000101&amp;details=Type%20which%20item%20is%20handled%20or%20any%20instruction%20(Ajay%20time%2C%20Alisha%2FVedant%20nights%2C%20Tue%20Jul%2021%20coverage)%2C%20then%20Save.%20The%20assistant%20picks%20this%20up%20on%20the%20next%20morning%20run." target="_blank" rel="noopener">📝 Update the assistant</a></div>
+      </div>
 <!-- /BRIEFING_DECISIONS -->
     </div>
   </div>
@@ -234,6 +255,9 @@
   </div>
 
   <div class="footer">
+    <div class="cta-row" style="justify-content:center;margin-bottom:0.6rem;">
+      <a class="cta" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=FSB-SYNC%3A%20note&amp;dates=20991231/21000101&amp;details=Type%20anything%20for%20the%20assistant%20%E2%80%94%20new%20events%2C%20corrections%2C%20instructions%20%E2%80%94%20then%20Save.%20Processed%20on%20the%20next%20morning%20run." target="_blank" rel="noopener">📝 Note to the assistant</a>
+    </div>
     <button onclick="location.reload()">Refresh</button>
     <div id="gen-time">
       <!-- BRIEFING_GENERATED -->
